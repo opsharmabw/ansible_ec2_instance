@@ -1,0 +1,14 @@
+rg: TestResourceGroup
+location: East US
+Vnet: TestVnet
+cidr_Vnet: 10.0.0.0/16
+cidr_subnet: 10.0.1.0/24
+subnet: TestSubnet
+pub_ip: TestPublicIP
+sg: TestSecurityGroup
+NIC: TestNIC
+VM: TestVM
+disk: Standard_DS1_v2
+image: UbuntuServer
+publisher: Canonical
+version: 18.04-LTS

@@ -1,0 +1,86 @@
+- name: create a VPC
+  ec2_vpc_net:
+    name: rahul-vpc
+    cidr_block: 10.10.0.0/24
+    region: "{{ region }}"
+    state: present
+    aws_access_key: "{{ access }}"
+    aws_secret_key: "{{ secret }}" 
+  register: vpc
+
+- name: create a subnet
+  ec2_vpc_subnet:
+    state: present
+    vpc_id: "{{ vpc.vpc.id }}"
+    region: "{{ region }}"
+    cidr: 10.10.0.0/26
+    aws_access_key: "{{ access }}"
+    aws_secret_key: "{{ secret }}"
+    map_public: yes
+    resource_tags:
+      Name: rahul-subnet
+  register: subnet	
+
+- name: create a internet gateway
+  ec2_vpc_igw:
+    vpc_id: "{{ vpc.vpc.id }}"
+    region: "{{ region }}"
+    aws_access_key: "{{ access }}"
+    aws_secret_key: "{{ secret }}"
+    state: "present"
+    tags: 
+      Name: rahul-igw
+  register: igw
+
+
+- name: create vpc route table
+  ec2_vpc_route_table:
+    vpc_id: "{{ vpc.vpc.id }}"
+    region: "{{ region }}"
+    aws_access_key: "{{ access }}"
+    aws_secret_key: "{{ secret }}"
+    subnets:
+      - "{{ subnet.subnet.id }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ igw.gateway_id  }}"
+    tags:
+      Name: rahul-route
+
+- name: create a security group
+  ec2_group:
+    name: rahulsg
+    description: security group
+    vpc_id: "{{ vpc.vpc.id }}"
+    region: "{{ region }}"
+    aws_access_key: "{{ access }}"
+    aws_secret_key: "{{ secret }}"
+    rules:
+      - proto: tcp
+        ports:
+        - 80
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        ports:
+        - 22
+        cidr_ip: 0.0.0.0/0
+  register: security_group
+
+- name: create a ec2 Instance 
+  ec2:
+    image: ami-083654bd07b5da81d
+    wait: yes
+    instance_type: t2.micro
+    region: "{{ region }}"
+    group_id: "{{ security_group.group_id }}"
+    vpc_subnet_id: "{{ subnet.subnet.id }}"
+    key_name: new1-s
+    instance_tags:
+      Name: rahultestvm
+    count_tag:
+      Name: testrahulvm
+    exact_count: 1
+    aws_access_key: "{{ access }}"
+    aws_secret_key: "{{ secret }}"
+
+

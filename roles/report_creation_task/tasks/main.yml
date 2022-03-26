@@ -1,0 +1,52 @@
+- block:
+      - name: delete report file if present
+        file:
+          path: /tmp/azure_usecase_report.csv
+          state: absent
+        delegate_to: localhost
+        
+      
+      - name: create csv header file
+        lineinfile:
+          path: /tmp/azure_usecase_report.csv
+          line: VM NAME, VM ID, RESOURCE_GROUP ID, PUBLIC IP, SECURITY GROUP ID, VNET ID, SUBNET ID, SNAPSHOT ID
+          create: yes
+        delegate_to: localhost
+      
+        
+      - name: append data into the file
+        lineinfile:
+          path: /tmp/azure_usecase_report.csv
+          line: |
+            {{ stat_vm_name }}, {{ stat_vm_id }}, {{ stat_resource_group_id }}, {{ stat_public_ip }}, {{stat_security_group_id}}, {{stat_vnet_id}}, {{stat_subnet_id}}, {{ stat_snapshot_id }}
+          state: present
+        delegate_to: localhost
+
+  rescue:
+      - name: Display error message
+        debug: msg="Error in parsing the query"
+      
+      - name: End the play for hosts 
+        meta: end_host
+
+- block:
+      - name: Sending Azure report mail
+        mail:
+          host: smtp.gmail.com
+          port: 587
+          username: "{{var_mail_username}}"
+          password: "{{var_mail_passoword}}"
+          to:
+          - Omprakash Sharma <omprakash.sharma@gslab.com>
+          subject: Azure Resource Report
+          body:
+          - Azure resource report
+          attach:
+          - /tmp/azure_usecase_report.csv
+          
+        delegate_to: localhost
+
+      
+  #   rescue:
+  #     - name: Print Error for sending mail
+  #       debug: msg="Sending mail failed"
