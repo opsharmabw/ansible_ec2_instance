@@ -1,3 +1,0 @@
-- hosts: localhost
-  roles:
-  - roles/azure_vm_deployment
