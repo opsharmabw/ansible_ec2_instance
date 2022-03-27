@@ -86,25 +86,24 @@
 - debug:
     var: ec2_instance.instances[0].public_ip
 
-# - name: creating one stat variable containing ip address of the new virtual machine
-#   ansible.builtin.set_stats:
-#     data:
-#       target_ip_list: "{{ ec2_instance.instances.public_ip }}"
+- name: creating one stat variable containing ip address of the new virtual machine
+  ansible.builtin.set_stats:
+    data:
+      target_ip_list: "{{ ec2_instance.instances[0].public_ip }}"
 
 
-# - name: Add the ipaddress generated into AT inventory
-#   uri:
-#       url: https://{{tower_ip}}/api/v2/groups/{{group_number}}/hosts/
-#       user: "{{at_username}}"
-#       password: "{{at_password}}"
-#       method: POST
-#       body: '{ "name" : "{{ec2_instance.instances.public_ip}}" , "description": "vm_name: {{ VM }}" }'
-#       force_basic_auth: yes
-#       status_code: 201
-#       body_format: json
-#       validate_certs: no
-#   register:   AT_info
-
+- name: Add the ipaddress generated into AT inventory
+  uri:
+      url: https://{{tower_ip}}/api/v2/groups/{{group_number}}/hosts/
+      user: "{{at_username}}"
+      password: "{{at_password}}"
+      method: POST
+      body: '{ "name" : "{{ec2_instance.instances[0].public_ip}}" , "description": "vm_name: {{ VM }}" }'
+      force_basic_auth: yes
+      status_code: 201
+      body_format: json
+      validate_certs: no
+  register:   AT_info
 
 
 
