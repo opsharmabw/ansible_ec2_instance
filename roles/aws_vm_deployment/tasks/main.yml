@@ -83,7 +83,7 @@
 
 - name: Wait for SSH to start
   wait_for:
-    host: "{{ ec2_instance.private_ip }}"
+    host: "{{ ec2_instance.instances[0].private_ip }}"
     port: 22
     timeout: 300
 
