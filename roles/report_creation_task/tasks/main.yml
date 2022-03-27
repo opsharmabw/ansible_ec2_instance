@@ -1,14 +1,14 @@
 - block:
       - name: delete report file if present
         file:
-          path: /tmp/azure_usecase_report.csv
+          path: /tmp/aws_usecase_report.csv
           state: absent
         delegate_to: localhost
         
       
       - name: create csv header file
         lineinfile:
-          path: /tmp/azure_usecase_report.csv
+          path: /tmp/aws_usecase_report.csv
           line: VM Name, VM ID, VPC ID, PUBLIC IP, SECURITY GROUP ID, SUBNET ID, PRIVATE IP
           create: yes
         delegate_to: localhost
@@ -16,7 +16,7 @@
         
       - name: append data into the file
         lineinfile:
-          path: /tmp/azure_usecase_report.csv
+          path: /tmp/aws_usecase_report.csv
           line: |
             {{ stat_vm_name }}, {{ stat_vm_id }}, {{ stat_vpc_id }}, {{ stat_public_ip }}, {{stat_security_group_id}}, {{stat_subnet_id}}, {{stat_private_ip}}
           state: present
@@ -30,7 +30,7 @@
         meta: end_host
 
 - block:
-      - name: Sending Azure report mail
+      - name: Sending aws report mail
         mail:
           host: smtp.gmail.com
           port: 587
@@ -38,11 +38,11 @@
           password: "{{var_mail_passoword}}"
           to:
           - Omprakash Sharma <omprakash.sharma@gslab.com>
-          subject: Azure Resource Report
+          subject: aws Resource Report
           body:
-          - Azure resource report
+          - aws resource report
           attach:
-          - /tmp/azure_usecase_report.csv
+          - /tmp/aws_usecase_report.csv
           
         delegate_to: localhost
 
