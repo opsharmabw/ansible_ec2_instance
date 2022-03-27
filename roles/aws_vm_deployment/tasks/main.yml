@@ -84,7 +84,7 @@
 
 
 - debug:
-  var: ec2_instance.instance.public_ip
+    var: ec2_instance.instance.public_ip
 
 - name: creating one stat variable containing ip address of the new virtual machine
   ansible.builtin.set_stats:
