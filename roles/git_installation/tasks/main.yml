@@ -1,0 +1,4 @@
+- name: install git on target host
+  yum:
+    name: git
+    state: present

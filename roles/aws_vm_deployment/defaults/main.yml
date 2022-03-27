@@ -8,7 +8,10 @@ pub_ip: TestPublicIP
 sg: TestSecurityGroup
 NIC: TestNIC
 VM: TestVM
-disk: Standard_DS1_v2
-image: UbuntuServer
-publisher: Canonical
-version: 18.04-LTS
+key_name: instancekey
+image_id: ami-083654bd07b5da81d
+instance_id: t2.micro
+at_username: admin
+at_password: Bawania@123
+group_number:1
+tower_ip: 3.237.236.199

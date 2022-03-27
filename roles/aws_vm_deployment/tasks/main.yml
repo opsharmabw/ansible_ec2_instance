@@ -68,19 +68,95 @@
 
 - name: create a ec2 Instance 
   ec2:
-    image: ami-083654bd07b5da81d
+    image: "{{ image_id }}"
     wait: yes
-    instance_type: t2.micro
+    instance_type: "{{ instance_id }}"
     region: "{{ region }}"
     group_id: "{{ security_group.group_id }}"
     vpc_subnet_id: "{{ subnet.subnet.id }}"
-    key_name: new1-s
+    key_name: "{{ key_name }}"
     instance_tags:
       Name: rahultestvm
-    count_tag:
-      Name: testrahulvm
-    exact_count: 1
+    count: 1 
     aws_access_key: "{{ access }}"
     aws_secret_key: "{{ secret }}"
+  register: ec2_instance
 
 
+- debug:
+  var: ec2_instance.instance.public_ip
+
+- name: creating one stat variable containing ip address of the new virtual machine
+  ansible.builtin.set_stats:
+    data:
+      target_ip_list: "{{ ec2_instance.instance.public_ip }}"
+
+
+- name: Add the ipaddress generated into AT inventory
+  uri:
+      url: https://{{tower_ip}}/api/v2/groups/{{group_number}}/hosts/
+      user: "{{at_username}}"
+      password: "{{at_password}}"
+      method: POST
+      body: '{ "name" : "{{ec2_instance.instance.public_ip}}" , "description": "vm_name: {{ VM }}" }'
+      force_basic_auth: yes
+      status_code: 201
+      body_format: json
+      validate_certs: no
+  register:   AT_info
+
+
+
+# - name: store the blob uri
+#   set_fact:
+#     source_uri_var: "{{ vm_info.ansible_facts.azure_vm.properties.storageProfile.osDisk.vhd.uri }}"
+
+# - name: print the uri
+#   debug:
+#     var: source_uri_var
+
+# - name: creating one stat variable containing source uri of the snapshot
+#   ansible.builtin.set_stats:
+#     data:
+#       source_uri: "{{ source_uri_var }}"
+
+
+# - name: creating one stat variable containing name of new virtual machine
+#   ansible.builtin.set_stats:
+#     data:
+#       stat_vm_name: "{{ vm_info.ansible_facts.azure_vm.name }}"
+
+# - name: creating one stat variable containing id of new virtual machine 
+#   ansible.builtin.set_stats:
+#     data:
+#       stat_vm_id: "{{ vm_info.ansible_facts.azure_vm.id }}"
+
+# - name: creating one stat variable containing resource group id
+#   ansible.builtin.set_stats:
+#     data:
+#       stat_resource_group_id: "{{ resource_group.state.id }}"
+
+# - name: creating one stat variable containing subnet id
+#   ansible.builtin.set_stats:
+#     data:
+#       stat_subnet_id: "{{ virtual_subnet.state.id }}"
+      
+# - name: creating one stat variable containing virtual network id
+#   ansible.builtin.set_stats:
+#     data:
+#       stat_vnet_id: "{{ virtual_network.state.id }}"
+
+# - name: creating one stat variable containing security group id
+#   ansible.builtin.set_stats:
+#     data:
+#       stat_security_group_id: "{{ security_group.state.id }}"
+
+# - name: creating one stat variable containing private ip address of the new virtual machine
+#   ansible.builtin.set_stats:
+#     data:
+#       stat_private_ip: "{{ output_ip_address.state.ip_address }}"
+
+# - name: creating one stat variable containing public ip address of the new virtual machine
+#   ansible.builtin.set_stats:
+#     data:
+#       stat_public_ip: "{{ output_ip_address.state.ip_address }}"
