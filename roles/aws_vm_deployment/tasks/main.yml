@@ -69,9 +69,8 @@
 
 - name: create key pair using provided key_material
   amazon.aws.ec2_key:
-    name: "{{ key_name }}"
+    name: my_keypair
     key_material: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCzJAljhUMEjEcAmX7nDXtpEe1i6FKx/B0SF/EV4TLmOy3eKrBAB9ARtEPIA5BLwBuI0qA9hreM6b0+V9wz1a9B9a1o6nPckcM4GqHl1hc5P4/lQlN3YIrANvAXnu8+dh1AaBJe53ixWtMnLtknTQaX5NRr+4Z2ZRD3Fuboegm6q2kUkOw1BfIL68graK00GGfsau1A9Nix40FR1W5m27rGzpMg8/2VUr4orKo+pZ9KyBwL6RmQ8MH12HRyljp006MWwATfta+tzWRpw6zAeXwbtwgAgWvO+W8xpxXiLheku4QQCBLofVV0alD3Unc+e3B8zf/RCVC6KZm1OJOPk9T7/9skGk4n+0cSQm02PFQFzgDv/Ieb7KE+veO7dAcee7ql5tBna88eW35lTdVd73D2SDjezIwceXGxigKV7heD/AIMA2aryn7KWI2lSG2npZv3N+Cl3T3ckv38pDn9fR0yg4uhQyHifuk5T6ksEuZB2Eku7+/dUCoSN8JuZ+6qCw8= gslab\gsc-30904@GS-6089'
-
 - name: create a ec2 Instance 
   ec2:
     image: "{{ image_id }}"
@@ -80,7 +79,7 @@
     region: "{{ region }}"
     group_id: "{{ security_group.group_id }}"
     vpc_subnet_id: "{{ subnet.subnet.id }}"
-    key_name: "{{ key_name }}"
+    key_name: my_keypair
     instance_tags:
       Name: rahultestvm
     count: 1 
