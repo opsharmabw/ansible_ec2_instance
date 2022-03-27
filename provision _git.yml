@@ -1,3 +1,4 @@
 - hosts: "{{ target_ip }}"
+  become: true
   roles:
   - roles/git_installation
