@@ -9,7 +9,7 @@
       - name: create csv header file
         lineinfile:
           path: /tmp/azure_usecase_report.csv
-          line: VM Name, VM ID, VPC ID, PUBLIC IP, SECURITY GROUP ID, IGW ID, SUBNET ID, PRIVATE IP
+          line: VM Name, VM ID, VPC ID, PUBLIC IP, SECURITY GROUP ID, SUBNET ID, PRIVATE IP
           create: yes
         delegate_to: localhost
       
@@ -18,7 +18,7 @@
         lineinfile:
           path: /tmp/azure_usecase_report.csv
           line: |
-            {{ stat_vm_name }}, {{ stat_vm_id }}, {{ stat_vpc_id }}, {{ stat_public_ip }}, {{stat_security_group_id}}, {{stat_igw_id}}, {{stat_subnet_id}}, {{stat_private_ip}}
+            {{ stat_vm_name }}, {{ stat_vm_id }}, {{ stat_vpc_id }}, {{ stat_public_ip }}, {{stat_security_group_id}}, {{stat_subnet_id}}, {{stat_private_ip}}
           state: present
         delegate_to: localhost
 

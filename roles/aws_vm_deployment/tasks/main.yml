@@ -134,11 +134,6 @@
     data:
       stat_subnet_id: "{{ subnet.subnet.id }}"
       
-- name: creating one stat variable containing igw id
-  ansible.builtin.set_stats:
-    data:
-      stat_igw_id: "{{ virtual_network.state.id }}"
-
 - name: creating one stat variable containing security group id
   ansible.builtin.set_stats:
     data:
