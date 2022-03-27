@@ -80,12 +80,22 @@
     aws_secret_key: "{{ secret }}"
   register: ec2_instance
 
+- name: Allocating elastic IP to instance
+  ec2_eip:
+    region: "{{ region }}"
+    aws_access_key: "{{ access }}"
+    aws_secret_key: "{{ secret }}"
+    in_vpc: yes
+    reuse_existing_ip_allowed: yes
+    state: present
+    instance_id: "{{ ec2_instance.instances[0].id }}"
+  register: instance_eip
 
 - name: Wait for SSH to start
   wait_for:
     host: "{{ ec2_instance.instances[0].private_ip }}"
     port: 22
-    timeout: 300
+    timeout: 100
 
 - debug:
     var: ec2_instance
