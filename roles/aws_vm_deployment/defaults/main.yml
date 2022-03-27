@@ -9,7 +9,7 @@ sg: TestSecurityGroup
 NIC: TestNIC
 VM: TestVM
 key_name: instancekey
-image_id: ami-083654bd07b5da81d
+image_id: ami-0c02fb55956c7d316
 instance_id: t2.micro
 at_username: admin
 at_password: Bawania@123
