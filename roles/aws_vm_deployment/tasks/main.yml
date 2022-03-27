@@ -89,7 +89,7 @@
 - name: creating one stat variable containing ip address of the new virtual machine
   ansible.builtin.set_stats:
     data:
-      target_ip_list: "{{ ec2_instance.instances[0].public_ip }}"
+      target_ip: "{{ ec2_instance.instances[0].public_ip }}"
 
 
 - name: Add the ipaddress generated into AT inventory
