@@ -13,5 +13,5 @@ image_id: ami-083654bd07b5da81d
 instance_id: t2.micro
 at_username: admin
 at_password: Bawania@123
-group_number:1
+group_number: 1
 tower_ip: 3.237.236.199
