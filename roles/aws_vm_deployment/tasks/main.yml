@@ -81,6 +81,9 @@
 
 
 - debug:
+    var: ec2_instance
+
+- debug:
     var: ec2_instance.instances[0].public_ip
 
 - name: creating one stat variable containing ip address of the new virtual machine
@@ -105,10 +108,10 @@
 
 
 
-# - name: creating one stat variable containing name of new virtual machine
-#   ansible.builtin.set_stats:
-#     data:
-#       stat_vm_name: "{{ ec2_instance.ansible_facts.azure_vm.name }}"
+- name: creating one stat variable containing name of new virtual machine
+  ansible.builtin.set_stats:
+    data:
+      stat_vm_name: "{{ ec2_instance.instances[0].public_ip }}"
 
 # - name: creating one stat variable containing id of new virtual machine 
 #   ansible.builtin.set_stats:
