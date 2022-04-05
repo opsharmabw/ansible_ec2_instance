@@ -1,3 +1,4 @@
 - hosts: localhost
   roles:
   - roles/aws_vm_deployment
+  

@@ -119,10 +119,12 @@
     data:
       stat_vm_name: "{{ ec2_instance.instances[0].tags.Name }}"
 
+
 - name: creating one stat variable containing id of new virtual machine 
   ansible.builtin.set_stats:
     data:
       stat_vm_id: "{{ ec2_instance.instances[0].id }}"
+
 
 - name: creating one stat variable containing vpc id
   ansible.builtin.set_stats:
@@ -148,3 +150,5 @@
   ansible.builtin.set_stats:
     data:
       stat_public_ip: "{{ ec2_instance.instances[0].public_ip }}"
+
+

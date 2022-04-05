@@ -1,0 +1,59 @@
+{
+    "ec2_instance": {
+        "changed": true,
+        "instance_ids": [
+            "i-0128d07de511f686f"
+        ],
+        "instances": [
+            {
+                "id": "i-0128d07de511f686f",
+                "ami_launch_index": "0",
+                "private_ip": "10.10.0.35",
+                "private_dns_name": "ip-10-10-0-35.ec2.internal",
+                "public_ip": "35.174.176.200",
+                "dns_name": "ec2-35-174-176-200.compute-1.amazonaws.com",
+                "public_dns_name": "ec2-35-174-176-200.compute-1.amazonaws.com",
+                "state_code": 16,
+                "architecture": "x86_64",
+                "image_id": "ami-0c02fb55956c7d316",
+                "key_name": "my_keypair",
+                "placement": "us-east-1e",
+                "region": "us-east-1",
+                "kernel": null,
+                "ramdisk": null,
+                "launch_time": "2022-03-27T13:23:09.000Z",
+                "instance_type": "t2.micro",
+                "root_device_type": "ebs",
+                "root_device_name": "/dev/xvda",
+                "state": "running",
+                "hypervisor": "xen",
+                "tags": {
+                    "Name": "rahultestvm"
+                },
+                "groups": {
+                    "sg-09a284ca44e08d8f8": "rahulsg"
+                },
+                "virtualization_type": "hvm",
+                "ebs_optimized": false,
+                "block_device_mapping": {
+                    "/dev/xvda": {
+                        "status": "attached",
+                        "volume_id": "vol-0b236c20ad9fc8f3a",
+                        "delete_on_termination": true
+                    }
+                },
+                "tenancy": "default"
+            }
+        ],
+        "tagged_instances": [],
+        "failed": false
+    },
+
+
+    "_ansible_verbose_always": true,
+    "_ansible_no_log": false,
+    "changed": false
+}
+
+
+
