@@ -37,7 +37,7 @@
           username: "{{var_mail_username}}"
           password: "{{var_mail_passoword}}"
           to:
-          - Omprakash Sharma <omprakash.sharma@gslab.com>
+          - Omprakash Sharma <omprakash.sharma@gmail.com>
           subject: aws Resource Report
           body:
           - aws resource report
